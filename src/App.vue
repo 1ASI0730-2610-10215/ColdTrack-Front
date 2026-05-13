@@ -1,13 +1,11 @@
 <script setup>
 /**
- * @summary Temporary root component for the clean ColdTrack integration project.
+ * @summary Root component that renders the ColdTrack application shell.
  * @author Codex Assistant
  */
+import appLayout from './shared/presentation/components/app-layout.vue';
 </script>
 
 <template>
-  <main class="integration-placeholder" aria-label="ColdTrack integration placeholder">
-    <h1>ColdTrack Front Web</h1>
-    <p>Clean project ready to receive the five split packages.</p>
-  </main>
+  <app-layout />
 </template>
