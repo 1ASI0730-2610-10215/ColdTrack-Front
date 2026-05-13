@@ -3,6 +3,7 @@
  * @author Codex Assistant
  */
 import { httpClient } from '../../shared/infrastructure/http/http-client.js';
+import { apiEndpoints } from '../../shared/infrastructure/http/api-endpoints.js';
 
 export class ShipmentsApiService {
   /**
@@ -11,7 +12,7 @@ export class ShipmentsApiService {
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   getAll() {
-    return httpClient.get('/shipments');
+    return httpClient.get(apiEndpoints.shipments);
   }
 
   /**
@@ -21,7 +22,7 @@ export class ShipmentsApiService {
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   create(shipment) {
-    return httpClient.post('/shipments', shipment);
+    return httpClient.post(apiEndpoints.shipments, shipment);
   }
 
   /**
@@ -30,6 +31,6 @@ export class ShipmentsApiService {
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   getDrivers() {
-    return httpClient.get('/drivers');
+    return httpClient.get(apiEndpoints.drivers);
   }
 }

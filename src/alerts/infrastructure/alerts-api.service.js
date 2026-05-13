@@ -3,6 +3,7 @@
  * @author Codex Assistant
  */
 import { httpClient } from '../../shared/infrastructure/http/http-client.js';
+import { apiEndpoints } from '../../shared/infrastructure/http/api-endpoints.js';
 
 export class AlertsApiService {
   /**
@@ -11,6 +12,6 @@ export class AlertsApiService {
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   getAll() {
-    return httpClient.get('/alerts');
+    return httpClient.get(apiEndpoints.alerts);
   }
 }

@@ -3,6 +3,7 @@
  * @author Codex Assistant
  */
 import { httpClient } from '../../shared/infrastructure/http/http-client.js';
+import { apiEndpoints } from '../../shared/infrastructure/http/api-endpoints.js';
 
 export class SensorsApiService {
   /**
@@ -11,7 +12,7 @@ export class SensorsApiService {
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   getAll() {
-    return httpClient.get('/sensors');
+    return httpClient.get(apiEndpoints.sensors);
   }
 
   /**
@@ -21,6 +22,6 @@ export class SensorsApiService {
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   create(sensor) {
-    return httpClient.post('/sensors', sensor);
+    return httpClient.post(apiEndpoints.sensors, sensor);
   }
 }
