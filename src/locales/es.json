@@ -54,7 +54,7 @@
     "searchPlaceholder": "Buscar envío..."
   },
   "shipments": {
-    "id": "ID",
+    "id": "Código de envío",
     "destination": "Destino",
     "status": "Estado",
     "driver": "Conductor",
@@ -86,12 +86,12 @@
     "freeSensors": "Disponibles",
     "list": "Lista de Sensores",
     "searchPlaceholder": "Buscar sensor...",
-    "sensorId": "ID Sensor",
+    "sensorId": "Código de sensor",
     "assignedShipment": "Envío Asignado",
     "lastReading": "Última Lectura",
     "link": "Vincular",
     "inUse": "En uso",
-    "newSensorId": "Nuevo ID de sensor",
+    "newSensorId": "Nuevo código de sensor",
     "created": "Sensor registrado"
   },
   "alerts": {

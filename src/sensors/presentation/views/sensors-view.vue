@@ -11,10 +11,10 @@ const toast = useToast();
 const sensorStore = useSensorsStore();
 const searchTerm = ref('');
 const dialogVisible = ref(false);
-const form = reactive({ id: '' });
+const form = reactive({ sensorCode: '' });
 
 const filteredSensors = computed(() => sensorStore.sensors.value.filter((sensor) =>
-  `${sensor.id} ${sensor.shipmentId ?? ''}`.toLowerCase().includes(searchTerm.value.toLowerCase())
+  `${sensor.sensorCode} ${sensor.shipmentCode ?? ''}`.toLowerCase().includes(searchTerm.value.toLowerCase())
 ));
 
 /**
@@ -23,8 +23,8 @@ const filteredSensors = computed(() => sensorStore.sensors.value.filter((sensor)
  * @returns {Promise<void>} Resolves when the sensor is stored.
  */
 async function submitSensor() {
-  await sensorStore.create({ id: form.id.toUpperCase(), shipmentId: null, lastReading: null, temperature: null, humidity: null });
-  form.id = '';
+  await sensorStore.create({ sensorCode: form.sensorCode.toUpperCase(), lastReading: null, temperature: null, humidity: null });
+  form.sensorCode = '';
   dialogVisible.value = false;
   toast.add({ severity: 'success', summary: 'ColdTrack', detail: 'Sensor created', life: 2500 });
 }
@@ -57,19 +57,19 @@ onMounted(sensorStore.load);
         </pv-icon-field>
       </div>
       <pv-data-table :value="filteredSensors" responsive-layout="scroll">
-        <pv-column field="id" :header="$t('sensors.sensorId')" />
+        <pv-column field="sensorCode" :header="$t('sensors.sensorId')" />
         <pv-column :header="$t('shipments.status')"><template #body="{ data }"><pv-tag :value="$t(`common.${data.status === 'assigned' ? 'assigned' : 'available'}`)" :severity="data.status === 'assigned' ? 'info' : 'success'" /></template></pv-column>
-        <pv-column :header="$t('sensors.assignedShipment')"><template #body="{ data }">{{ data.shipmentId ?? '-' }}</template></pv-column>
+        <pv-column :header="$t('sensors.assignedShipment')"><template #body="{ data }">{{ data.shipmentCode ?? '-' }}</template></pv-column>
         <pv-column :header="$t('sensors.lastReading')"><template #body="{ data }">{{ data.lastReading ?? '-' }}</template></pv-column>
         <pv-column :header="$t('shipments.temperature')"><template #body="{ data }">{{ data.temperature ?? '-' }}</template></pv-column>
         <pv-column :header="$t('shipments.humidity')"><template #body="{ data }">{{ data.humidity ?? '-' }}</template></pv-column>
-        <pv-column :header="$t('common.actions')"><template #body="{ data }"><a href="#" :aria-label="`Sensor ${data.id} action`">{{ data.status === 'assigned' ? $t('sensors.inUse') : $t('sensors.link') }}</a></template></pv-column>
+        <pv-column :header="$t('common.actions')"><template #body="{ data }"><a href="#" :aria-label="`Sensor ${data.sensorCode} action`">{{ data.status === 'assigned' ? $t('sensors.inUse') : $t('sensors.link') }}</a></template></pv-column>
       </pv-data-table>
     </article>
 
     <pv-dialog v-model:visible="dialogVisible" modal :header="$t('sensors.registerSensor')" :style="{ width: '28rem' }">
       <form class="dialog-form" aria-label="Register sensor form" @submit.prevent="submitSensor">
-        <label>{{ $t('sensors.sensorId') }}<pv-input-text v-model="form.id" required :placeholder="$t('sensors.newSensorId')" aria-label="Sensor ID" /></label>
+        <label>{{ $t('sensors.sensorId') }}<pv-input-text v-model="form.sensorCode" required :placeholder="$t('sensors.newSensorId')" aria-label="Sensor code" /></label>
         <pv-button type="submit" :label="$t('common.register')" icon="pi pi-plus" />
       </form>
     </pv-dialog>

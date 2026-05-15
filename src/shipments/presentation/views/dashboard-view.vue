@@ -12,7 +12,7 @@ const shipmentStore = useShipmentsStore();
 const alertStore = useAlertsStore();
 
 const filteredShipments = computed(() => shipmentStore.activeShipments.value.filter((shipment) =>
-  `${shipment.id} ${shipment.destination} ${shipment.driver}`.toLowerCase().includes(searchTerm.value.toLowerCase())
+  `${shipment.shipmentCode} ${shipment.destination} ${shipment.driver}`.toLowerCase().includes(searchTerm.value.toLowerCase())
 ));
 
 /**
@@ -76,7 +76,7 @@ onMounted(async () => {
         </pv-icon-field>
       </div>
       <pv-data-table :value="filteredShipments" responsive-layout="scroll">
-        <pv-column field="id" :header="$t('shipments.id')" />
+        <pv-column field="shipmentCode" :header="$t('shipments.id')" />
         <pv-column field="destination" :header="$t('shipments.destination')" />
         <pv-column :header="$t('shipments.status')">
           <template #body="{ data }"><pv-tag :value="$t(`common.${data.status === 'in-transit' ? 'inTransit' : data.status}`)" :severity="data.status === 'pending' ? 'warn' : 'info'" /></template>

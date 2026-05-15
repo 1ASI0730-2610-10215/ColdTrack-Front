@@ -10,7 +10,7 @@ const shipmentStore = useShipmentsStore();
 const searchTerm = ref('');
 
 const completedShipments = computed(() => shipmentStore.completedShipments.value.filter((shipment) =>
-  `${shipment.id} ${shipment.destination} ${shipment.driver} ${shipment.cargoDescription}`.toLowerCase().includes(searchTerm.value.toLowerCase())
+  `${shipment.shipmentCode} ${shipment.destination} ${shipment.driver} ${shipment.cargoDescription}`.toLowerCase().includes(searchTerm.value.toLowerCase())
 ));
 
 const averageTemperature = computed(() => {
@@ -51,7 +51,7 @@ onMounted(shipmentStore.load);
         </pv-select>
       </div>
       <pv-data-table :value="completedShipments" responsive-layout="scroll">
-        <pv-column field="id" :header="$t('shipments.id')" />
+        <pv-column field="shipmentCode" :header="$t('shipments.id')" />
         <pv-column field="destination" :header="$t('shipments.destination')" />
         <pv-column field="driver" :header="$t('shipments.driver')" />
         <pv-column field="cargoDescription" :header="$t('shipments.cargo')" />
