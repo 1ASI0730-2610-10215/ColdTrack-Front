@@ -1,4 +1,15 @@
 /**
+ * Builds a display code from legacy API identifiers.
+ *
+ * @param {string|number|null} value Legacy identifier.
+ * @returns {string} Shipment display code.
+ */
+function resolveShipmentCode(value) {
+  if (String(value ?? '').startsWith('ENV-')) return value;
+  return value === null || value === undefined ? '' : `ENV-${String(value).padStart(3, '0')}`;
+}
+
+/**
  * @summary Represents a monitored cold-chain shipment.
  * @author Codex Assistant
  */
@@ -10,7 +21,7 @@ export class Shipment {
    */
   constructor(shipment = {}) {
     this.id = shipment.id ?? null;
-    this.shipmentCode = shipment.shipmentCode ?? (String(shipment.id ?? '').startsWith('ENV-') ? shipment.id : '');
+    this.shipmentCode = shipment.shipmentCode ?? resolveShipmentCode(shipment.id);
     this.destination = shipment.destination ?? '';
     this.status = shipment.status ?? 'pending';
     this.driver = shipment.driver ?? '';
