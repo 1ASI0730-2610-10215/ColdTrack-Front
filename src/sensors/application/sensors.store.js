@@ -35,7 +35,7 @@ export function useSensorsStore() {
    * @returns {Promise<Sensor>} Created sensor.
    */
   async function create(payload) {
-    const sensor = new Sensor({ status: 'available', ...payload });
+    const sensor = new Sensor({ status: 'available', shipmentCode: null, ...payload });
     const response = await api.create(sensor);
     sensors.value = [...sensors.value, new Sensor(response.data)];
     return new Sensor(response.data);

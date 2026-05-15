@@ -22,7 +22,8 @@ export class ShipmentsApiService {
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   create(shipment) {
-    return httpClient.post(apiEndpoints.shipments, shipment);
+    const { id, ...payload } = shipment;
+    return httpClient.post(apiEndpoints.shipments, payload);
   }
 
   /**

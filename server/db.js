@@ -46,7 +46,8 @@ module.exports = {
   ],
   "shipments": [
     {
-      "id": "ENV-001",
+      "id": 1,
+      "shipmentCode": "ENV-001",
       "destination": "Lima",
       "status": "in-transit",
       "driver": "Carlos Ruiz",
@@ -59,7 +60,8 @@ module.exports = {
       "alertsCount": 2
     },
     {
-      "id": "ENV-002",
+      "id": 2,
+      "shipmentCode": "ENV-002",
       "destination": "Arequipa",
       "status": "in-transit",
       "driver": "Ana Garcia",
@@ -72,7 +74,8 @@ module.exports = {
       "alertsCount": 1
     },
     {
-      "id": "ENV-003",
+      "id": 3,
+      "shipmentCode": "ENV-003",
       "destination": "Trujillo",
       "status": "completed",
       "driver": "Luis Mendoza",
@@ -85,7 +88,8 @@ module.exports = {
       "alertsCount": 0
     },
     {
-      "id": "ENV-004",
+      "id": 4,
+      "shipmentCode": "ENV-004",
       "destination": "Cusco",
       "status": "pending",
       "driver": "Maria Torres",
@@ -98,7 +102,8 @@ module.exports = {
       "alertsCount": 0
     },
     {
-      "id": "ENV-005",
+      "id": 5,
+      "shipmentCode": "ENV-005",
       "destination": "Chiclayo",
       "status": "completed",
       "driver": "Maria Torres",
@@ -111,7 +116,8 @@ module.exports = {
       "alertsCount": 2
     },
     {
-      "id": "ENV-006",
+      "id": 6,
+      "shipmentCode": "ENV-006",
       "destination": "Piura",
       "status": "pending",
       "driver": "Luis Mendoza",
@@ -126,33 +132,37 @@ module.exports = {
   ],
   "sensors": [
     {
-      "id": "SENS-A123",
+      "id": 1,
+      "sensorCode": "SENS-A123",
       "status": "assigned",
-      "shipmentId": "ENV-001",
+      "shipmentCode": "ENV-001",
       "lastReading": "2026-04-21T16:30",
       "temperature": 22.5,
       "humidity": 45
     },
     {
-      "id": "SENS-B456",
+      "id": 2,
+      "sensorCode": "SENS-B456",
       "status": "available",
-      "shipmentId": null,
+      "shipmentCode": null,
       "lastReading": null,
       "temperature": null,
       "humidity": null
     },
     {
-      "id": "SENS-C789",
+      "id": 3,
+      "sensorCode": "SENS-C789",
       "status": "available",
-      "shipmentId": null,
+      "shipmentCode": null,
       "lastReading": null,
       "temperature": null,
       "humidity": null
     },
     {
-      "id": "SENS-D012",
+      "id": 4,
+      "sensorCode": "SENS-D012",
       "status": "assigned",
-      "shipmentId": "ENV-002",
+      "shipmentCode": "ENV-002",
       "lastReading": "2026-04-21T16:28",
       "temperature": 21.8,
       "humidity": 50
@@ -160,8 +170,9 @@ module.exports = {
   ],
   "alerts": [
     {
-      "id": "ALT-001",
-      "shipmentId": "ENV-001",
+      "id": 1,
+      "alertCode": "ALT-001",
+      "shipmentCode": "ENV-001",
       "type": "temperature",
       "severity": "critical",
       "status": "active",
@@ -171,8 +182,9 @@ module.exports = {
       "createdAt": "2026-04-21T15:45"
     },
     {
-      "id": "ALT-002",
-      "shipmentId": "ENV-002",
+      "id": 2,
+      "alertCode": "ALT-002",
+      "shipmentCode": "ENV-002",
       "type": "humidity",
       "severity": "warning",
       "status": "active",
@@ -182,8 +194,9 @@ module.exports = {
       "createdAt": "2026-04-21T14:30"
     },
     {
-      "id": "ALT-003",
-      "shipmentId": "ENV-001",
+      "id": 3,
+      "alertCode": "ALT-003",
+      "shipmentCode": "ENV-001",
       "type": "temperature",
       "severity": "warning",
       "status": "resolved",
@@ -193,8 +206,9 @@ module.exports = {
       "createdAt": "2026-04-21T12:15"
     },
     {
-      "id": "ALT-004",
-      "shipmentId": "ENV-002",
+      "id": 4,
+      "alertCode": "ALT-004",
+      "shipmentCode": "ENV-002",
       "type": "sensor",
       "severity": "critical",
       "status": "resolved",
@@ -204,8 +218,9 @@ module.exports = {
       "createdAt": "2026-04-21T10:20"
     },
     {
-      "id": "ALT-005",
-      "shipmentId": "ENV-001",
+      "id": 5,
+      "alertCode": "ALT-005",
+      "shipmentCode": "ENV-001",
       "type": "temperature",
       "severity": "critical",
       "status": "resolved",

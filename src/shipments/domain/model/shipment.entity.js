@@ -9,7 +9,8 @@ export class Shipment {
    * @param {object} shipment Raw shipment properties.
    */
   constructor(shipment = {}) {
-    this.id = shipment.id ?? '';
+    this.id = shipment.id ?? null;
+    this.shipmentCode = shipment.shipmentCode ?? (String(shipment.id ?? '').startsWith('ENV-') ? shipment.id : '');
     this.destination = shipment.destination ?? '';
     this.status = shipment.status ?? 'pending';
     this.driver = shipment.driver ?? '';

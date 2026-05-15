@@ -11,6 +11,19 @@ const drivers = ref([]);
 const api = new ShipmentsApiService();
 
 /**
+ * Builds the next visible shipment code without using the API technical id.
+ *
+ * @returns {string} Next shipment code.
+ */
+function getNextShipmentCode() {
+  const lastNumber = shipments.value.reduce((max, shipment) => {
+    const value = Number(String(shipment.shipmentCode).replace('ENV-', ''));
+    return Number.isNaN(value) ? max : Math.max(max, value);
+  }, 0);
+  return `ENV-${String(lastNumber + 1).padStart(3, '0')}`;
+}
+
+/**
  * Provides shipment state and operations.
  *
  * @returns {object} Shipment state facade.
@@ -37,9 +50,8 @@ export function useShipmentsStore() {
    * @returns {Promise<Shipment>} Created shipment.
    */
   async function create(payload) {
-    const sequence = shipments.value.length + 1;
     const created = new Shipment({
-      id: `ENV-${String(sequence).padStart(3, '0')}`,
+      shipmentCode: getNextShipmentCode(),
       status: 'pending',
       temperature: null,
       humidity: null,
