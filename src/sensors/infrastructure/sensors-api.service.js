@@ -22,6 +22,7 @@ export class SensorsApiService {
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   create(sensor) {
-    return httpClient.post(apiEndpoints.sensors, sensor);
+    const { id, ...payload } = sensor;
+    return httpClient.post(apiEndpoints.sensors, payload);
   }
 }

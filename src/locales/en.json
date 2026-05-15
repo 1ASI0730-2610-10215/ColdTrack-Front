@@ -54,7 +54,7 @@
     "searchPlaceholder": "Search shipment..."
   },
   "shipments": {
-    "id": "ID",
+    "id": "Shipment Code",
     "destination": "Destination",
     "status": "Status",
     "driver": "Driver",
@@ -86,12 +86,12 @@
     "freeSensors": "Available",
     "list": "Sensor List",
     "searchPlaceholder": "Search sensor...",
-    "sensorId": "Sensor ID",
+    "sensorId": "Sensor Code",
     "assignedShipment": "Assigned Shipment",
     "lastReading": "Last Reading",
     "link": "Link",
     "inUse": "In use",
-    "newSensorId": "New sensor ID",
+    "newSensorId": "New sensor code",
     "created": "Sensor registered"
   },
   "alerts": {

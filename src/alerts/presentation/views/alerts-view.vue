@@ -14,7 +14,7 @@ const severityOptions = ['all', 'critical', 'warning'];
 const statusOptions = ['all', 'active', 'resolved'];
 
 const filteredAlerts = computed(() => alertStore.alerts.value.filter((alert) => {
-  const matchesSearch = `${alert.id} ${alert.shipmentId} ${alert.message}`.toLowerCase().includes(searchTerm.value.toLowerCase());
+  const matchesSearch = `${alert.alertCode} ${alert.shipmentCode} ${alert.message}`.toLowerCase().includes(searchTerm.value.toLowerCase());
   const matchesSeverity = severity.value === 'all' || alert.severity === severity.value;
   const matchesStatus = status.value === 'all' || alert.status === status.value;
   return matchesSearch && matchesSeverity && matchesStatus;
@@ -58,12 +58,12 @@ onMounted(alertStore.load);
         <i :class="['pi', alert.type === 'humidity' ? 'pi-tint' : 'pi-thermometer', alert.severity]" />
         <div>
           <div class="alert-heading">
-            <strong>{{ alert.id }}</strong>
+            <strong>{{ alert.alertCode }}</strong>
             <pv-tag :value="$t(`common.${alert.severity}`)" :severity="alert.severity === 'critical' ? 'danger' : 'warn'" />
             <pv-tag :value="$t(`common.${alert.status}`)" :severity="alert.status === 'active' ? 'danger' : 'success'" />
           </div>
           <p>{{ alert.message }}</p>
-          <small>{{ $t('alerts.shipment') }}: {{ alert.shipmentId }} &nbsp; {{ $t('alerts.date') }}: {{ alert.createdAt }} &nbsp; {{ $t('alerts.value') }}: {{ alert.value }} ({{ alert.limit }})</small>
+          <small>{{ $t('alerts.shipment') }}: {{ alert.shipmentCode }} &nbsp; {{ $t('alerts.date') }}: {{ alert.createdAt }} &nbsp; {{ $t('alerts.value') }}: {{ alert.value }} ({{ alert.limit }})</small>
         </div>
       </div>
     </article>
