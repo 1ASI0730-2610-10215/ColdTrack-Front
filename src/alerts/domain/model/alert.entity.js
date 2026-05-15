@@ -1,4 +1,15 @@
 /**
+ * Builds a display code from legacy API identifiers.
+ *
+ * @param {string|number|null} value Legacy identifier.
+ * @returns {string} Alert display code.
+ */
+function resolveAlertCode(value) {
+  if (String(value ?? '').startsWith('ALT-')) return value;
+  return value === null || value === undefined ? '' : `ALT-${String(value).padStart(3, '0')}`;
+}
+
+/**
  * @summary Represents an operational alert raised by shipment sensors.
  * @author Codex Assistant
  */
@@ -10,7 +21,7 @@ export class Alert {
    */
   constructor(alert = {}) {
     this.id = alert.id ?? null;
-    this.alertCode = alert.alertCode ?? (String(alert.id ?? '').startsWith('ALT-') ? alert.id : '');
+    this.alertCode = alert.alertCode ?? resolveAlertCode(alert.id);
     this.shipmentCode = alert.shipmentCode ?? alert.shipmentId ?? '';
     this.type = alert.type ?? 'temperature';
     this.severity = alert.severity ?? 'warning';
