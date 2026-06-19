@@ -16,22 +16,12 @@ export class ShipmentsApiService {
   }
 
   /**
-   * Creates a shipment in the fake API.
+   * Creates a shipment in the ColdTrack backend.
    *
    * @param {object} shipment Shipment payload.
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   create(shipment) {
-    const { id, ...payload } = shipment;
-    return httpClient.post(apiEndpoints.shipments, payload);
-  }
-
-  /**
-   * Gets drivers for shipment assignment.
-   *
-   * @returns {Promise<import('axios').AxiosResponse>} Axios response.
-   */
-  getDrivers() {
-    return httpClient.get(apiEndpoints.drivers);
+    return httpClient.post(apiEndpoints.shipments, shipment);
   }
 }

@@ -3,7 +3,7 @@
  * @summary Presents a form for registering new shipments.
  * @author Codex Assistant
  */
-import { onMounted, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import { useShipmentsStore } from '../../application/shipments.store.js';
@@ -11,14 +11,16 @@ import { useShipmentsStore } from '../../application/shipments.store.js';
 const router = useRouter();
 const toast = useToast();
 const shipmentStore = useShipmentsStore();
-const { drivers } = shipmentStore;
+const isSubmitting = ref(false);
 const form = reactive({
   destination: '',
-  driver: '',
+  driverId: 2,
   cargoDescription: '',
   departureDate: '',
   estimatedArrival: ''
 });
+const canSubmit = computed(() => form.destination.trim() && form.driverId > 0 && form.cargoDescription.trim()
+  && form.departureDate && form.estimatedArrival);
 
 /**
  * Submits a new shipment to the fake API.
@@ -26,12 +28,24 @@ const form = reactive({
  * @returns {Promise<void>} Resolves after navigation.
  */
 async function submitShipment() {
-  await shipmentStore.create({ ...form });
-  toast.add({ severity: 'success', summary: 'ColdTrack', detail: 'Shipment created', life: 2500 });
-  await router.push('/dashboard');
+  if (!canSubmit.value) return;
+  isSubmitting.value = true;
+  try {
+    await shipmentStore.create({
+      destination: form.destination.trim(),
+      driverId: Number(form.driverId),
+      cargoDescription: form.cargoDescription.trim(),
+      departureDate: new Date(form.departureDate).toISOString(),
+      estimatedArrival: new Date(form.estimatedArrival).toISOString()
+    });
+    toast.add({ severity: 'success', summary: 'ColdTrack', detail: 'Shipment created', life: 2500 });
+    await router.push('/dashboard');
+  } catch (error) {
+    toast.add({ severity: 'error', summary: 'ColdTrack', detail: error.response?.data?.detail ?? 'Shipment could not be created', life: 3000 });
+  } finally {
+    isSubmitting.value = false;
+  }
 }
-
-onMounted(shipmentStore.load);
 </script>
 
 <template>
@@ -46,16 +60,16 @@ onMounted(shipmentStore.load);
     <form class="form-panel" aria-label="New shipment form" @submit.prevent="submitShipment">
       <div class="form-grid">
         <label>{{ $t('shipments.destination') }}<pv-input-text v-model="form.destination" required :placeholder="$t('shipments.destinationPlaceholder')" aria-label="Destination" /></label>
-        <label>{{ $t('shipments.assignedDriver') }}<pv-select v-model="form.driver" required :options="drivers" option-label="fullName" option-value="fullName" :placeholder="$t('shipments.driverPlaceholder')" aria-label="Assigned driver" /></label>
+        <label>{{ $t('shipments.assignedDriver') }}<pv-input-text v-model.number="form.driverId" type="number" min="1" required :placeholder="$t('shipments.driverPlaceholder')" aria-label="Assigned driver identifier" /></label>
       </div>
       <label>{{ $t('shipments.cargoDescription') }}<pv-textarea v-model="form.cargoDescription" rows="5" required :placeholder="$t('shipments.cargoPlaceholder')" aria-label="Cargo description" /></label>
       <div class="form-grid">
-        <label>{{ $t('shipments.departureDate') }}<pv-input-text v-model="form.departureDate" required :placeholder="$t('shipments.departureDatePlaceholder')" aria-label="Departure date" /></label>
-        <label>{{ $t('shipments.estimatedArrival') }}<pv-input-text v-model="form.estimatedArrival" required :placeholder="$t('shipments.arrivalPlaceholder')" aria-label="Estimated arrival" /></label>
+        <label>{{ $t('shipments.departureDate') }}<pv-input-text v-model="form.departureDate" type="datetime-local" required :placeholder="$t('shipments.departureDatePlaceholder')" aria-label="Departure date" /></label>
+        <label>{{ $t('shipments.estimatedArrival') }}<pv-input-text v-model="form.estimatedArrival" type="datetime-local" required :placeholder="$t('shipments.arrivalPlaceholder')" aria-label="Estimated arrival" /></label>
       </div>
       <p class="info-note"><strong>{{ $t('shipments.note').split(':')[0] }}:</strong>{{ $t('shipments.note').slice($t('shipments.note').indexOf(':') + 1) }}</p>
       <div class="form-actions">
-        <pv-button type="submit" :label="$t('shipments.registerShipment')" />
+        <pv-button type="submit" :label="$t('shipments.registerShipment')" :loading="isSubmitting" :disabled="!canSubmit" />
         <pv-button type="button" :label="$t('common.cancel')" severity="secondary" outlined @click="router.push('/dashboard')" />
       </div>
     </form>

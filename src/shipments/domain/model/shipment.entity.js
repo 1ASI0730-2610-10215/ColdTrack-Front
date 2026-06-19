@@ -10,6 +10,17 @@ function resolveShipmentCode(value) {
 }
 
 /**
+ * Normalizes backend shipment status values for interface translation keys.
+ *
+ * @param {string} value Backend status.
+ * @returns {string} Normalized status.
+ */
+function normalizeStatus(value) {
+  const statuses = { Registered: 'registered', InTransit: 'in-transit', Completed: 'completed', Cancelled: 'cancelled' };
+  return statuses[value] ?? String(value ?? 'registered').toLowerCase();
+}
+
+/**
  * @summary Represents a monitored cold-chain shipment.
  * @author Codex Assistant
  */
@@ -23,8 +34,9 @@ export class Shipment {
     this.id = shipment.id ?? null;
     this.shipmentCode = shipment.shipmentCode ?? resolveShipmentCode(shipment.id);
     this.destination = shipment.destination ?? '';
-    this.status = shipment.status ?? 'pending';
-    this.driver = shipment.driver ?? '';
+    this.status = normalizeStatus(shipment.status);
+    this.driverId = shipment.driverId ?? null;
+    this.driver = shipment.driver ?? (this.driverId ? `Driver #${this.driverId}` : '');
     this.cargoDescription = shipment.cargoDescription ?? '';
     this.temperature = shipment.temperature ?? null;
     this.humidity = shipment.humidity ?? null;

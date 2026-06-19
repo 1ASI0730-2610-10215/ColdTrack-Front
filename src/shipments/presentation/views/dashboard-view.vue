@@ -6,10 +6,12 @@
 import { computed, onMounted, ref } from 'vue';
 import { useShipmentsStore } from '../../application/shipments.store.js';
 import { useAlertsStore } from '../../../alerts/application/alerts.store.js';
+import { useAnalyticsStore } from '../../../analytics/application/analytics.store.js';
 
 const searchTerm = ref('');
 const shipmentStore = useShipmentsStore();
 const alertStore = useAlertsStore();
+const analyticsStore = useAnalyticsStore();
 
 const filteredShipments = computed(() => shipmentStore.activeShipments.value.filter((shipment) =>
   `${shipment.shipmentCode} ${shipment.destination} ${shipment.driver}`.toLowerCase().includes(searchTerm.value.toLowerCase())
@@ -26,8 +28,12 @@ function formatMetric(value, suffix) {
   return value === null || value === undefined ? '-' : `${value}${suffix}`;
 }
 
+function formatDate(value) {
+  return value ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)) : '-';
+}
+
 onMounted(async () => {
-  await Promise.all([shipmentStore.load(), alertStore.load()]);
+  await Promise.all([shipmentStore.load(), alertStore.load(), analyticsStore.loadDashboard()]);
 });
 </script>
 
@@ -62,9 +68,9 @@ onMounted(async () => {
     </article>
 
     <div class="metric-grid" aria-label="Shipment metrics">
-      <pv-card class="metric-card"><template #content><i class="pi pi-box metric-icon blue" /><span>{{ $t('common.total') }}</span><strong>{{ shipmentStore.shipments.length }}</strong><p>{{ $t('dashboard.registeredShipments') }}</p></template></pv-card>
-      <pv-card class="metric-card"><template #content><i class="pi pi-truck metric-icon blue" /><span>{{ $t('common.active') }}</span><strong>{{ shipmentStore.activeShipments.length }}</strong><p>{{ $t('dashboard.onRoute') }}</p></template></pv-card>
-      <pv-card class="metric-card"><template #content><i class="pi pi-check-circle metric-icon green" /><span>{{ $t('common.completed') }}</span><strong>{{ shipmentStore.completedShipments.length }}</strong><p>{{ $t('dashboard.delivered') }}</p></template></pv-card>
+      <pv-card class="metric-card"><template #content><i class="pi pi-box metric-icon blue" /><span>{{ $t('common.total') }}</span><strong>{{ analyticsStore.metrics.value.totalShipments }}</strong><p>{{ $t('dashboard.registeredShipments') }}</p></template></pv-card>
+      <pv-card class="metric-card"><template #content><i class="pi pi-truck metric-icon blue" /><span>{{ $t('common.active') }}</span><strong>{{ analyticsStore.metrics.value.activeShipments }}</strong><p>{{ $t('dashboard.onRoute') }}</p></template></pv-card>
+      <pv-card class="metric-card"><template #content><i class="pi pi-check-circle metric-icon green" /><span>{{ $t('common.completed') }}</span><strong>{{ analyticsStore.metrics.value.completedShipments }}</strong><p>{{ $t('dashboard.delivered') }}</p></template></pv-card>
     </div>
 
     <article class="panel" aria-label="Active shipments table">
@@ -79,12 +85,12 @@ onMounted(async () => {
         <pv-column field="shipmentCode" :header="$t('shipments.id')" />
         <pv-column field="destination" :header="$t('shipments.destination')" />
         <pv-column :header="$t('shipments.status')">
-          <template #body="{ data }"><pv-tag :value="$t(`common.${data.status === 'in-transit' ? 'inTransit' : data.status}`)" :severity="data.status === 'pending' ? 'warn' : 'info'" /></template>
+          <template #body="{ data }"><pv-tag :value="$t(`common.${data.status === 'in-transit' ? 'inTransit' : data.status}`)" :severity="data.status === 'registered' ? 'warn' : 'info'" /></template>
         </pv-column>
         <pv-column field="driver" :header="$t('shipments.driver')" />
         <pv-column :header="$t('shipments.temperature')"><template #body="{ data }">{{ formatMetric(data.temperature, '°C') }}</template></pv-column>
         <pv-column :header="$t('shipments.humidity')"><template #body="{ data }">{{ formatMetric(data.humidity, '%') }}</template></pv-column>
-        <pv-column field="estimatedArrival" :header="$t('shipments.estimatedArrival')" />
+        <pv-column :header="$t('shipments.estimatedArrival')"><template #body="{ data }">{{ formatDate(data.estimatedArrival) }}</template></pv-column>
         <pv-column :header="$t('common.actions')"><template #body><a href="#" aria-label="View shipment details">{{ $t('common.viewDetails') }}</a></template></pv-column>
       </pv-data-table>
     </article>
