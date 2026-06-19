@@ -3,15 +3,18 @@
  * @summary Renders the application toolbar, routed content and footer.
  * @author Codex Assistant
  */
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import logoUrl from '../../../assets/logo-coldtrack.png';
 import { useAuthenticationStore } from '../../../iam/application/authentication.store.js';
 import languageSwitcher from './language-switcher.vue';
+import { useAlertsStore } from '../../../alerts/application/alerts.store.js';
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthenticationStore();
+const alertStore = useAlertsStore();
+const activeAlertCount = computed(() => alertStore.activeAlerts.value.length);
 const publicRoutes = ['sign-in', 'sign-up'];
 const showNavigation = computed(() => !publicRoutes.includes(route.name));
 const showApplicationChrome = computed(() => authStore.isAuthenticated.value);
@@ -25,6 +28,10 @@ async function signOut() {
   authStore.signOut();
   await router.push('/sign-in');
 }
+
+watch(authStore.isAuthenticated, (authenticated) => {
+  if (authenticated) alertStore.load().catch(() => undefined);
+}, { immediate: true });
 </script>
 
 <template>
@@ -41,7 +48,7 @@ async function signOut() {
             <router-link class="nav-link" to="/shipments/new"><i class="pi pi-plus" />{{ $t('nav.newShipment') }}</router-link>
             <router-link class="nav-link" to="/sensors"><i class="pi pi-thermometer" />{{ $t('nav.sensors') }}</router-link>
             <router-link class="nav-link nav-link-with-badge" to="/alerts">
-              <i class="pi pi-bell" />{{ $t('nav.alerts') }}<span class="notification-badge" aria-label="1 active notification">1</span>
+              <i class="pi pi-bell" />{{ $t('nav.alerts') }}<span v-if="activeAlertCount" class="notification-badge" :aria-label="`${activeAlertCount} active notifications`">{{ activeAlertCount }}</span>
             </router-link>
             <router-link class="nav-link" to="/history"><i class="pi pi-history" />{{ $t('nav.history') }}</router-link>
           </nav>

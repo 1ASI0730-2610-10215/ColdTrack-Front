@@ -14,4 +14,12 @@ export class AlertsApiService {
   getAll() {
     return httpClient.get(apiEndpoints.alerts);
   }
+
+  acknowledge(alertId) {
+    return httpClient.patch(`${apiEndpoints.alerts}/${alertId}/acknowledgment`);
+  }
+
+  resolve(alertId, notes) {
+    return httpClient.patch(`${apiEndpoints.alerts}/${alertId}/resolution`, { notes });
+  }
 }

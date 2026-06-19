@@ -22,13 +22,16 @@ export class Alert {
   constructor(alert = {}) {
     this.id = alert.id ?? null;
     this.alertCode = alert.alertCode ?? resolveAlertCode(alert.id);
-    this.shipmentCode = alert.shipmentCode ?? alert.shipmentId ?? '';
-    this.type = alert.type ?? 'temperature';
-    this.severity = alert.severity ?? 'warning';
-    this.status = alert.status ?? 'active';
+    this.shipmentId = alert.shipmentId ?? null;
+    this.sensorId = alert.sensorId ?? null;
+    this.type = String(alert.type ?? '').toLowerCase().includes('humidity') ? 'humidity' : 'temperature';
+    this.severity = String(alert.severity ?? 'Warning').toLowerCase();
+    const statuses = { Triggered: 'active', Acknowledged: 'acknowledged', Resolved: 'resolved' };
+    this.status = statuses[alert.status] ?? String(alert.status ?? 'active').toLowerCase();
     this.message = alert.message ?? '';
     this.value = alert.value ?? '-';
     this.limit = alert.limit ?? '-';
-    this.createdAt = alert.createdAt ?? '';
+    this.createdAt = alert.triggeredAt ?? alert.createdAt ?? '';
+    this.resolutionNotes = alert.resolutionNotes ?? null;
   }
 }

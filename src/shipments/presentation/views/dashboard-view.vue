@@ -16,6 +16,11 @@ const analyticsStore = useAnalyticsStore();
 const filteredShipments = computed(() => shipmentStore.activeShipments.value.filter((shipment) =>
   `${shipment.shipmentCode} ${shipment.destination} ${shipment.driver}`.toLowerCase().includes(searchTerm.value.toLowerCase())
 ));
+const visibleAlerts = computed(() => alertStore.activeAlerts.value.slice(0, 2));
+
+function shipmentLabel(shipmentId) {
+  return shipmentStore.shipments.value.find((shipment) => shipment.id === shipmentId)?.shipmentCode ?? `#${shipmentId}`;
+}
 
 /**
  * Formats a nullable shipment metric.
@@ -57,14 +62,11 @@ onMounted(async () => {
         <h2><i class="pi pi-bell" />{{ $t('dashboard.activeAlerts') }}</h2>
         <router-link to="/alerts">{{ $t('dashboard.seeAll') }}</router-link>
       </div>
-      <div class="alert-strip critical">
+      <div v-for="alert in visibleAlerts" :key="alert.id" :class="['alert-strip', alert.severity]">
         <i class="pi pi-exclamation-triangle" />
-        <div><strong>{{ $t('dashboard.temperatureOut') }}</strong><span>{{ $t('alerts.shipment') }}: ENV-001</span></div>
+        <div><strong>{{ alert.message }}</strong><span>{{ $t('alerts.shipment') }}: {{ shipmentLabel(alert.shipmentId) }}</span></div>
       </div>
-      <div class="alert-strip warning">
-        <i class="pi pi-exclamation-triangle" />
-        <div><strong>{{ $t('dashboard.humidityHigh') }}</strong><span>{{ $t('alerts.shipment') }}: ENV-002</span></div>
-      </div>
+      <p v-if="!visibleAlerts.length" class="empty-state">{{ $t('alerts.noAlerts') }}</p>
     </article>
 
     <div class="metric-grid" aria-label="Shipment metrics">

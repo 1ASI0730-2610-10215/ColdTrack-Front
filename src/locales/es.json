@@ -37,7 +37,9 @@
     "all": "Todos",
     "critical": "Crítico",
     "warning": "Advertencia",
-    "resolved": "Resuelta"
+    "resolved": "Resuelta",
+    "acknowledged": "Reconocida",
+    "cancelled": "Cancelado"
   },
   "dashboard": {
     "title": "Dashboard de Envíos",
@@ -111,7 +113,10 @@
     "allStatuses": "Todos los estados",
     "shipment": "Envío",
     "date": "Fecha",
-    "value": "Valor"
+    "value": "Valor",
+    "acknowledge": "Reconocer",
+    "resolve": "Resolver",
+    "noAlerts": "No hay alertas que requieran atención"
   },
   "history": {
     "title": "Historial de Envíos",

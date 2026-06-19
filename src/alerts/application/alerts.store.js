@@ -28,5 +28,19 @@ export function useAlertsStore() {
     alerts.value = response.data.map((alert) => new Alert(alert));
   }
 
-  return { alerts, activeAlerts, criticalAlerts, load };
+  async function acknowledge(alertId) {
+    const response = await api.acknowledge(alertId);
+    const updated = new Alert(response.data);
+    alerts.value = alerts.value.map((alert) => alert.id === updated.id ? updated : alert);
+    return updated;
+  }
+
+  async function resolve(alertId, notes) {
+    const response = await api.resolve(alertId, notes);
+    const updated = new Alert(response.data);
+    alerts.value = alerts.value.map((alert) => alert.id === updated.id ? updated : alert);
+    return updated;
+  }
+
+  return { alerts, activeAlerts, criticalAlerts, load, acknowledge, resolve };
 }
