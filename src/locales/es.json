@@ -92,7 +92,12 @@
     "link": "Vincular",
     "inUse": "En uso",
     "newSensorId": "Nuevo código de sensor",
-    "created": "Sensor registrado"
+    "created": "Sensor registrado",
+    "modelName": "Modelo",
+    "assignSensor": "Asignar Sensor",
+    "selectShipment": "Selecciona un envío",
+    "recordTelemetry": "Registrar Lectura",
+    "recordedAt": "Fecha de lectura"
   },
   "alerts": {
     "title": "Sistema de Alertas",

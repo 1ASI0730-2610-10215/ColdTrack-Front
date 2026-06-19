@@ -92,7 +92,12 @@
     "link": "Link",
     "inUse": "In use",
     "newSensorId": "New sensor code",
-    "created": "Sensor registered"
+    "created": "Sensor registered",
+    "modelName": "Model",
+    "assignSensor": "Assign Sensor",
+    "selectShipment": "Select a shipment",
+    "recordTelemetry": "Record Reading",
+    "recordedAt": "Recorded at"
   },
   "alerts": {
     "title": "Alert System",
