@@ -13,8 +13,8 @@ export class UsersApiService {
    * @param {string} password Account password.
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
-  getByCredentials(email, password) {
-    return httpClient.get(apiEndpoints.users, { params: { email, password } });
+  signIn(email, password) {
+    return httpClient.post(`${apiEndpoints.authentication}/sign-in`, { email, password });
   }
 
   /**
@@ -23,7 +23,16 @@ export class UsersApiService {
    * @param {object} user User payload.
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
-  create(user) {
-    return httpClient.post(apiEndpoints.users, user);
+  signUp(user) {
+    return httpClient.post(`${apiEndpoints.authentication}/sign-up`, user);
+  }
+
+  /**
+   * Gets the current authenticated user.
+   *
+   * @returns {Promise<import('axios').AxiosResponse>} Axios response.
+   */
+  getCurrent() {
+    return httpClient.get(`${apiEndpoints.users}/me`);
   }
 }
