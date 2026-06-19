@@ -6,10 +6,12 @@
 import { computed, onMounted, ref } from 'vue';
 import { useAnalyticsStore } from '../../../analytics/application/analytics.store.js';
 import { useToast } from 'primevue/usetoast';
+import { downloadBlob } from '../../../shared/infrastructure/files/blob-download.js';
 
 const analyticsStore = useAnalyticsStore();
 const toast = useToast();
 const searchTerm = ref('');
+const isExporting = ref(false);
 const periodStart = `${new Date().getFullYear()}-01-01T00:00:00.000Z`;
 const periodEnd = `${new Date().getFullYear()}-12-31T23:59:59.999Z`;
 
@@ -29,17 +31,15 @@ function formatDate(value) {
 }
 
 async function exportReport() {
+  isExporting.value = true;
   try {
     const { report, file } = await analyticsStore.generateReport(periodStart, periodEnd);
-    const url = URL.createObjectURL(file);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${report.reportCode}.pdf`;
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadBlob(file, `${report.reportCode}.pdf`);
     toast.add({ severity: 'success', summary: 'ColdTrack', detail: 'Report generated', life: 2500 });
   } catch (error) {
     toast.add({ severity: 'error', summary: 'ColdTrack', detail: error.response?.data?.detail ?? 'Report could not be generated', life: 3000 });
+  } finally {
+    isExporting.value = false;
   }
 }
 
@@ -53,7 +53,7 @@ onMounted(() => Promise.all([analyticsStore.loadHistory(periodStart, periodEnd),
         <h1 id="history-title">{{ $t('history.title') }}</h1>
         <p>{{ $t('history.subtitle') }}</p>
       </div>
-      <pv-button :label="$t('alerts.exportReport')" icon="pi pi-download" @click="exportReport" />
+      <pv-button :label="$t('alerts.exportReport')" icon="pi pi-download" :loading="isExporting" @click="exportReport" />
     </div>
 
     <div class="metric-grid" aria-label="History metrics">

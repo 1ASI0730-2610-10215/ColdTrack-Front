@@ -29,6 +29,17 @@ export function useShipmentsStore() {
   }
 
   /**
+   * Loads a shipment by identifier.
+   *
+   * @param {number} shipmentId Shipment identifier.
+   * @returns {Promise<Shipment>} Shipment detail.
+   */
+  async function getById(shipmentId) {
+    const response = await api.getById(shipmentId);
+    return new Shipment(response.data);
+  }
+
+  /**
    * Registers a new shipment.
    *
    * @param {object} payload Shipment form data.
@@ -40,5 +51,20 @@ export function useShipmentsStore() {
     return new Shipment(response.data);
   }
 
-  return { shipments, activeShipments, completedShipments, load, create };
+  /**
+   * Changes a shipment lifecycle status and refreshes local state.
+   *
+   * @param {number} shipmentId Shipment identifier.
+   * @param {string} status Backend status value.
+   * @param {string|null} remarks Optional change remarks.
+   * @returns {Promise<Shipment>} Updated shipment.
+   */
+  async function updateStatus(shipmentId, status, remarks = null) {
+    const response = await api.updateStatus(shipmentId, status, remarks);
+    const updated = new Shipment(response.data);
+    shipments.value = shipments.value.map((shipment) => shipment.id === updated.id ? updated : shipment);
+    return updated;
+  }
+
+  return { shipments, activeShipments, completedShipments, load, getById, create, updateStatus };
 }
