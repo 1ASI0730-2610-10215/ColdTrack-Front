@@ -4,12 +4,16 @@
  * @author Codex Assistant
  */
 import { computed, onMounted, ref } from 'vue';
-import { useShipmentsStore } from '../../application/shipments.store.js';
+import { useAnalyticsStore } from '../../../analytics/application/analytics.store.js';
+import { useToast } from 'primevue/usetoast';
 
-const shipmentStore = useShipmentsStore();
+const analyticsStore = useAnalyticsStore();
+const toast = useToast();
 const searchTerm = ref('');
+const periodStart = `${new Date().getFullYear()}-01-01T00:00:00.000Z`;
+const periodEnd = `${new Date().getFullYear()}-12-31T23:59:59.999Z`;
 
-const completedShipments = computed(() => shipmentStore.completedShipments.value.filter((shipment) =>
+const completedShipments = computed(() => analyticsStore.history.value.filter((shipment) =>
   `${shipment.shipmentCode} ${shipment.destination} ${shipment.driver} ${shipment.cargoDescription}`.toLowerCase().includes(searchTerm.value.toLowerCase())
 ));
 
@@ -20,7 +24,26 @@ const averageTemperature = computed(() => {
 
 const generatedAlerts = computed(() => completedShipments.value.reduce((sum, shipment) => sum + shipment.alertsCount, 0));
 
-onMounted(shipmentStore.load);
+function formatDate(value) {
+  return value ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)) : '-';
+}
+
+async function exportReport() {
+  try {
+    const { report, file } = await analyticsStore.generateReport(periodStart, periodEnd);
+    const url = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${report.reportCode}.pdf`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.add({ severity: 'success', summary: 'ColdTrack', detail: 'Report generated', life: 2500 });
+  } catch (error) {
+    toast.add({ severity: 'error', summary: 'ColdTrack', detail: error.response?.data?.detail ?? 'Report could not be generated', life: 3000 });
+  }
+}
+
+onMounted(() => Promise.all([analyticsStore.loadHistory(periodStart, periodEnd), analyticsStore.loadReports()]));
 </script>
 
 <template>
@@ -30,7 +53,7 @@ onMounted(shipmentStore.load);
         <h1 id="history-title">{{ $t('history.title') }}</h1>
         <p>{{ $t('history.subtitle') }}</p>
       </div>
-      <pv-button :label="$t('alerts.exportReport')" icon="pi pi-download" />
+      <pv-button :label="$t('alerts.exportReport')" icon="pi pi-download" @click="exportReport" />
     </div>
 
     <div class="metric-grid" aria-label="History metrics">
@@ -55,10 +78,10 @@ onMounted(shipmentStore.load);
         <pv-column field="destination" :header="$t('shipments.destination')" />
         <pv-column field="driver" :header="$t('shipments.driver')" />
         <pv-column field="cargoDescription" :header="$t('shipments.cargo')" />
-        <pv-column field="departureDate" :header="$t('shipments.departureDate')" />
-        <pv-column field="actualArrival" :header="$t('shipments.arrivalDate')" />
-        <pv-column :header="$t('history.averageTemperature')"><template #body="{ data }">{{ data.temperature }}°C</template></pv-column>
-        <pv-column :header="$t('history.averageHumidity')"><template #body="{ data }">{{ data.humidity }}%</template></pv-column>
+        <pv-column :header="$t('shipments.departureDate')"><template #body="{ data }">{{ formatDate(data.departureDate) }}</template></pv-column>
+        <pv-column :header="$t('shipments.arrivalDate')"><template #body="{ data }">{{ formatDate(data.actualArrival) }}</template></pv-column>
+        <pv-column :header="$t('history.averageTemperature')"><template #body="{ data }">{{ data.temperature ?? '-' }}{{ data.temperature === null ? '' : '°C' }}</template></pv-column>
+        <pv-column :header="$t('history.averageHumidity')"><template #body="{ data }">{{ data.humidity ?? '-' }}{{ data.humidity === null ? '' : '%' }}</template></pv-column>
         <pv-column field="alertsCount" :header="$t('nav.alerts')" />
       </pv-data-table>
     </article>

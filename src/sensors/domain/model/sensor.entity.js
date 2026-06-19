@@ -9,6 +9,10 @@ function resolveSensorCode(value) {
   return value === null || value === undefined ? '' : `SENS-${String(value).padStart(3, '0')}`;
 }
 
+function normalizeStatus(value) {
+  return String(value ?? 'Available').toLowerCase();
+}
+
 /**
  * @summary Represents an IoT sensor that can be assigned to a shipment.
  * @author Codex Assistant
@@ -22,9 +26,11 @@ export class Sensor {
   constructor(sensor = {}) {
     this.id = sensor.id ?? null;
     this.sensorCode = sensor.sensorCode ?? resolveSensorCode(sensor.id);
-    this.status = sensor.status ?? 'available';
-    this.shipmentCode = sensor.shipmentCode ?? sensor.shipmentId ?? null;
-    this.lastReading = sensor.lastReading ?? null;
+    this.modelName = sensor.modelName ?? '';
+    this.status = normalizeStatus(sensor.status);
+    this.shipmentId = sensor.shipmentId ?? null;
+    this.assignedAt = sensor.assignedAt ?? null;
+    this.lastReading = sensor.lastReadingAt ?? sensor.lastReading ?? null;
     this.temperature = sensor.temperature ?? null;
     this.humidity = sensor.humidity ?? null;
   }

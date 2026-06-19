@@ -16,13 +16,43 @@ export class SensorsApiService {
   }
 
   /**
-   * Creates a sensor in the fake API.
+   * Creates a sensor in the ColdTrack backend.
    *
    * @param {object} sensor Sensor payload.
    * @returns {Promise<import('axios').AxiosResponse>} Axios response.
    */
   create(sensor) {
-    const { id, ...payload } = sensor;
-    return httpClient.post(apiEndpoints.sensors, payload);
+    return httpClient.post(apiEndpoints.sensors, sensor);
+  }
+
+  /**
+   * Assigns a sensor to a shipment.
+   *
+   * @param {number} sensorId Sensor technical identifier.
+   * @param {number} shipmentId Shipment technical identifier.
+   * @returns {Promise<import('axios').AxiosResponse>} Axios response.
+   */
+  assign(sensorId, shipmentId) {
+    return httpClient.patch(`${apiEndpoints.sensors}/${sensorId}/assignment`, { shipmentId });
+  }
+
+  /**
+   * Records a telemetry reading.
+   *
+   * @param {object} reading Telemetry payload.
+   * @returns {Promise<import('axios').AxiosResponse>} Axios response.
+   */
+  recordTelemetry(reading) {
+    return httpClient.post(apiEndpoints.telemetry, reading);
+  }
+
+  /**
+   * Gets telemetry recorded for a shipment.
+   *
+   * @param {number} shipmentId Shipment technical identifier.
+   * @returns {Promise<import('axios').AxiosResponse>} Axios response.
+   */
+  getTelemetry(shipmentId) {
+    return httpClient.get(`${apiEndpoints.shipments}/${shipmentId}/telemetry`);
   }
 }

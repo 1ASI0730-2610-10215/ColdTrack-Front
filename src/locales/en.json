@@ -37,7 +37,9 @@
     "all": "All",
     "critical": "Critical",
     "warning": "Warning",
-    "resolved": "Resolved"
+    "resolved": "Resolved",
+    "acknowledged": "Acknowledged",
+    "cancelled": "Cancelled"
   },
   "dashboard": {
     "title": "Shipments Dashboard",
@@ -68,7 +70,7 @@
     "newSubtitle": "Complete all fields to create a new shipment",
     "assignedDriver": "Assigned Driver",
     "destinationPlaceholder": "Destination city",
-    "driverPlaceholder": "Select a driver",
+    "driverPlaceholder": "Driver user ID (demo: 2)",
     "cargoDescription": "Cargo Description",
     "cargoPlaceholder": "Describe the shipment contents...",
     "departureDatePlaceholder": "yyyy-mm-dd --:--",
@@ -92,7 +94,12 @@
     "link": "Link",
     "inUse": "In use",
     "newSensorId": "New sensor code",
-    "created": "Sensor registered"
+    "created": "Sensor registered",
+    "modelName": "Model",
+    "assignSensor": "Assign Sensor",
+    "selectShipment": "Select a shipment",
+    "recordTelemetry": "Record Reading",
+    "recordedAt": "Recorded at"
   },
   "alerts": {
     "title": "Alert System",
@@ -106,7 +113,10 @@
     "allStatuses": "All statuses",
     "shipment": "Shipment",
     "date": "Date",
-    "value": "Value"
+    "value": "Value",
+    "acknowledge": "Acknowledge",
+    "resolve": "Resolve",
+    "noAlerts": "No alerts require attention"
   },
   "history": {
     "title": "Shipment History",

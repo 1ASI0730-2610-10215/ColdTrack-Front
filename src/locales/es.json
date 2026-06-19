@@ -37,7 +37,9 @@
     "all": "Todos",
     "critical": "Crítico",
     "warning": "Advertencia",
-    "resolved": "Resuelta"
+    "resolved": "Resuelta",
+    "acknowledged": "Reconocida",
+    "cancelled": "Cancelado"
   },
   "dashboard": {
     "title": "Dashboard de Envíos",
@@ -68,7 +70,7 @@
     "newSubtitle": "Complete todos los campos para crear un nuevo envío",
     "assignedDriver": "Conductor Asignado",
     "destinationPlaceholder": "Ciudad de destino",
-    "driverPlaceholder": "Selecciona un conductor",
+    "driverPlaceholder": "ID de usuario conductor (demo: 2)",
     "cargoDescription": "Descripción de la Carga",
     "cargoPlaceholder": "Detalla el contenido del envío...",
     "departureDatePlaceholder": "aaaa-mm-dd --:--",
@@ -92,7 +94,12 @@
     "link": "Vincular",
     "inUse": "En uso",
     "newSensorId": "Nuevo código de sensor",
-    "created": "Sensor registrado"
+    "created": "Sensor registrado",
+    "modelName": "Modelo",
+    "assignSensor": "Asignar Sensor",
+    "selectShipment": "Selecciona un envío",
+    "recordTelemetry": "Registrar Lectura",
+    "recordedAt": "Fecha de lectura"
   },
   "alerts": {
     "title": "Sistema de Alertas",
@@ -106,7 +113,10 @@
     "allStatuses": "Todos los estados",
     "shipment": "Envío",
     "date": "Fecha",
-    "value": "Valor"
+    "value": "Valor",
+    "acknowledge": "Reconocer",
+    "resolve": "Resolver",
+    "noAlerts": "No hay alertas que requieran atención"
   },
   "history": {
     "title": "Historial de Envíos",
