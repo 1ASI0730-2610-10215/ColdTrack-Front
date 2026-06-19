@@ -16,6 +16,16 @@ export class ShipmentsApiService {
   }
 
   /**
+   * Gets one shipment by its technical identifier.
+   *
+   * @param {number} shipmentId Shipment identifier.
+   * @returns {Promise<import('axios').AxiosResponse>} Axios response.
+   */
+  getById(shipmentId) {
+    return httpClient.get(`${apiEndpoints.shipments}/${shipmentId}`);
+  }
+
+  /**
    * Creates a shipment in the ColdTrack backend.
    *
    * @param {object} shipment Shipment payload.
@@ -23,5 +33,17 @@ export class ShipmentsApiService {
    */
   create(shipment) {
     return httpClient.post(apiEndpoints.shipments, shipment);
+  }
+
+  /**
+   * Updates the lifecycle status of a shipment.
+   *
+   * @param {number} shipmentId Shipment identifier.
+   * @param {string} status Backend status value.
+   * @param {string|null} remarks Optional status change remarks.
+   * @returns {Promise<import('axios').AxiosResponse>} Axios response.
+   */
+  updateStatus(shipmentId, status, remarks = null) {
+    return httpClient.patch(`${apiEndpoints.shipments}/${shipmentId}/status`, { status, remarks });
   }
 }
