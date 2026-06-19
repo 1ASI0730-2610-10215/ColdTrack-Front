@@ -15,9 +15,11 @@ The production frontend communicates directly with the deployed backend. API cre
 - JWT sign-in and user registration.
 - Shipment dashboard backed by real analytics data.
 - Shipment registration and lifecycle monitoring.
+- Shipment detail dialog with assigned sensor, latest telemetry, and related alerts.
+- Controlled shipment status transitions from the dashboard.
 - Sensor registration, assignment, and telemetry recording.
 - Alert filtering, acknowledgement, and resolution.
-- Completed shipment history and PDF report generation.
+- Completed shipment history and PDF report downloads from dashboard, alerts, and history.
 - English and Spanish internationalization with English as the default language.
 - Responsive Material-themed PrimeVue interface.
 - ARIA landmarks, labels, and document-language synchronization.
