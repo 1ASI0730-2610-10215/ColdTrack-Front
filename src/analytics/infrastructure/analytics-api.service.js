@@ -14,4 +14,20 @@ export class AnalyticsApiService {
   getDashboard() {
     return httpClient.get(`${apiEndpoints.analytics}/dashboard`);
   }
+
+  getShipmentHistory(start, end) {
+    return httpClient.get(`${apiEndpoints.analytics}/shipment-history`, { params: { start, end } });
+  }
+
+  getReports() {
+    return httpClient.get(apiEndpoints.reports);
+  }
+
+  generateReport(start, end) {
+    return httpClient.post(apiEndpoints.reports, { start, end });
+  }
+
+  downloadReport(reportId) {
+    return httpClient.get(`${apiEndpoints.reports}/${reportId}/file`, { responseType: 'blob' });
+  }
 }
