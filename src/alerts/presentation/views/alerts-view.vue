@@ -7,13 +7,19 @@ import { computed, onMounted, ref } from 'vue';
 import { useAlertsStore } from '../../application/alerts.store.js';
 import { useShipmentsStore } from '../../../shipments/application/shipments.store.js';
 import { useToast } from 'primevue/usetoast';
+import { useAnalyticsStore } from '../../../analytics/application/analytics.store.js';
+import { downloadBlob } from '../../../shared/infrastructure/files/blob-download.js';
 
 const alertStore = useAlertsStore();
 const shipmentStore = useShipmentsStore();
 const toast = useToast();
+const analyticsStore = useAnalyticsStore();
 const searchTerm = ref('');
 const severity = ref('all');
 const status = ref('all');
+const isExporting = ref(false);
+const periodStart = `${new Date().getFullYear()}-01-01T00:00:00.000Z`;
+const periodEnd = `${new Date().getFullYear()}-12-31T23:59:59.999Z`;
 const severityOptions = ['all', 'critical', 'warning'];
 const statusOptions = ['all', 'active', 'acknowledged', 'resolved'];
 
@@ -50,6 +56,19 @@ async function resolve(alertId) {
   }
 }
 
+async function exportReport() {
+  isExporting.value = true;
+  try {
+    const { report, file } = await analyticsStore.generateReport(periodStart, periodEnd);
+    downloadBlob(file, `${report.reportCode}.pdf`);
+    toast.add({ severity: 'success', summary: 'ColdTrack', detail: 'Report generated', life: 2500 });
+  } catch (error) {
+    toast.add({ severity: 'error', summary: 'ColdTrack', detail: error.response?.data?.detail ?? 'Report could not be generated', life: 3000 });
+  } finally {
+    isExporting.value = false;
+  }
+}
+
 onMounted(() => Promise.all([alertStore.load(), shipmentStore.load()]));
 </script>
 
@@ -60,7 +79,7 @@ onMounted(() => Promise.all([alertStore.load(), shipmentStore.load()]));
         <h1 id="alerts-title">{{ $t('alerts.title') }}</h1>
         <p>{{ $t('alerts.subtitle') }}</p>
       </div>
-      <pv-button :label="$t('alerts.exportReport')" icon="pi pi-download" />
+      <pv-button :label="$t('alerts.exportReport')" icon="pi pi-download" :loading="isExporting" @click="exportReport" />
     </div>
 
     <div class="metric-grid" aria-label="Alert metrics">

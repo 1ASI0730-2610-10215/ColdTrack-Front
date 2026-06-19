@@ -407,6 +407,74 @@ textarea {
   gap: 1rem;
 }
 
+.shipment-detail {
+  display: grid;
+  gap: 1rem;
+}
+
+.detail-code {
+  color: #516989;
+  font-size: 0.85rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.detail-grid > div,
+.detail-block {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem;
+  border: 1px solid #d9e2ef;
+  border-radius: 6px;
+  background: #f7f9fc;
+}
+
+.detail-grid span {
+  color: #516989;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.detail-block h3,
+.detail-block p {
+  margin: 0;
+}
+
+.detail-block h3 {
+  font-size: 0.95rem;
+}
+
+.status-form {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 0.75rem;
+  padding-top: 0.25rem;
+}
+
+.status-form label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.dialog-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.detail-loading {
+  min-height: 8rem;
+  display: grid;
+  place-items: center;
+  color: #516989;
+}
+
 @media (max-width: 880px) {
   .app-toolbar,
   .app-toolbar .p-toolbar-group-start,
@@ -431,8 +499,14 @@ textarea {
   }
 
   .metric-grid,
-  .form-grid {
+  .form-grid,
+  .detail-grid,
+  .status-form {
     grid-template-columns: 1fr;
+  }
+
+  .dialog-actions {
+    grid-column: 1;
   }
 
   .page-header,

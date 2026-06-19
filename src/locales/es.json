@@ -77,7 +77,19 @@
     "arrivalPlaceholder": "aaaa-mm-dd --:--",
     "note": "Nota: Los sensores se asignarán en el siguiente paso. Primero registra la información básica del envío.",
     "registerShipment": "Registrar Envío",
-    "created": "Envío registrado"
+    "created": "Envío registrado",
+    "detailsTitle": "Detalles del envío",
+    "viewDetailsFor": "Ver detalles del envío {code}",
+    "loadingDetails": "Cargando detalles del envío...",
+    "assignedSensor": "Sensor asignado",
+    "noAssignedSensor": "Este envío no tiene un sensor asignado.",
+    "relatedAlerts": "Alertas relacionadas",
+    "noRelatedAlerts": "Este envío no tiene alertas relacionadas.",
+    "newStatus": "Nuevo estado",
+    "selectStatus": "Selecciona un estado",
+    "statusRemarks": "Observaciones",
+    "statusRemarksPlaceholder": "Motivo o notas para este cambio de estado",
+    "updateStatus": "Actualizar estado"
   },
   "sensors": {
     "title": "Gestión de Sensores",

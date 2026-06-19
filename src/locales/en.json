@@ -77,7 +77,19 @@
     "arrivalPlaceholder": "yyyy-mm-dd --:--",
     "note": "Note: Sensors will be assigned in the next step. First register the basic shipment information.",
     "registerShipment": "Register Shipment",
-    "created": "Shipment registered"
+    "created": "Shipment registered",
+    "detailsTitle": "Shipment details",
+    "viewDetailsFor": "View details for shipment {code}",
+    "loadingDetails": "Loading shipment details...",
+    "assignedSensor": "Assigned sensor",
+    "noAssignedSensor": "No sensor is assigned to this shipment.",
+    "relatedAlerts": "Related alerts",
+    "noRelatedAlerts": "No alerts are related to this shipment.",
+    "newStatus": "New status",
+    "selectStatus": "Select a status",
+    "statusRemarks": "Remarks",
+    "statusRemarksPlaceholder": "Reason or notes for this status change",
+    "updateStatus": "Update status"
   },
   "sensors": {
     "title": "Sensor Management",
