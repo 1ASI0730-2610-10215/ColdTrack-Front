@@ -68,7 +68,7 @@
     "newSubtitle": "Complete todos los campos para crear un nuevo envío",
     "assignedDriver": "Conductor Asignado",
     "destinationPlaceholder": "Ciudad de destino",
-    "driverPlaceholder": "Selecciona un conductor",
+    "driverPlaceholder": "ID de usuario conductor (demo: 2)",
     "cargoDescription": "Descripción de la Carga",
     "cargoPlaceholder": "Detalla el contenido del envío...",
     "departureDatePlaceholder": "aaaa-mm-dd --:--",
