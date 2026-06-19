@@ -37,7 +37,9 @@
     "all": "All",
     "critical": "Critical",
     "warning": "Warning",
-    "resolved": "Resolved"
+    "resolved": "Resolved",
+    "acknowledged": "Acknowledged",
+    "cancelled": "Cancelled"
   },
   "dashboard": {
     "title": "Shipments Dashboard",
@@ -111,7 +113,10 @@
     "allStatuses": "All statuses",
     "shipment": "Shipment",
     "date": "Date",
-    "value": "Value"
+    "value": "Value",
+    "acknowledge": "Acknowledge",
+    "resolve": "Resolve",
+    "noAlerts": "No alerts require attention"
   },
   "history": {
     "title": "Shipment History",
