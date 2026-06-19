@@ -14,12 +14,12 @@ const router = useRouter();
 const toast = useToast();
 const authStore = useAuthenticationStore();
 const usersApi = new UsersApiService();
-const form = reactive({ email: 'test@test.com', password: 'password' });
+const form = reactive({ email: 'admin@coldtrack.local', password: 'Password123!' });
 const isSubmitting = ref(false);
 const canSubmit = computed(() => form.email.trim().length > 0 && form.password.trim().length > 0);
 
 /**
- * Validates credentials against the fake API and starts a session.
+ * Authenticates against the ColdTrack backend and starts a JWT session.
  *
  * @returns {Promise<void>} Resolves after route change.
  */
@@ -27,14 +27,11 @@ async function signIn() {
   if (!canSubmit.value) return;
   isSubmitting.value = true;
   try {
-    const response = await usersApi.getByCredentials(form.email.trim(), form.password);
-    const user = response.data[0];
-    if (!user) {
-      toast.add({ severity: 'error', summary: 'ColdTrack', detail: 'Invalid email or password', life: 3000 });
-      return;
-    }
-    authStore.signIn({ id: user.id, fullName: user.fullName, email: user.email, role: user.role });
+    const response = await usersApi.signIn(form.email.trim(), form.password);
+    authStore.signIn(response.data);
     await router.push('/dashboard');
+  } catch (error) {
+    toast.add({ severity: 'error', summary: 'ColdTrack', detail: error.response?.data?.detail ?? 'Invalid email or password', life: 3000 });
   } finally {
     isSubmitting.value = false;
   }
@@ -53,7 +50,7 @@ async function signIn() {
       <a href="#" class="inline-link">{{ $t('auth.forgotPassword') }}</a>
       <pv-button type="submit" :label="$t('auth.signInTitle')" :loading="isSubmitting" :disabled="!canSubmit" />
       <p>{{ $t('auth.noAccount') }} <router-link to="/sign-up">{{ $t('auth.register') }}</router-link></p>
-      <div class="demo-box"><strong>{{ $t('auth.demo') }}:</strong> test@test.com / password</div>
+      <div class="demo-box"><strong>{{ $t('auth.demo') }}:</strong> admin@coldtrack.local / Password123!</div>
     </form>
   </section>
 </template>

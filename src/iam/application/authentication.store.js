@@ -3,9 +3,9 @@
  * @author Codex Assistant
  */
 import { computed, ref } from 'vue';
+import { clearSession, readSession, writeSession } from '../../shared/infrastructure/http/session-storage.js';
 
-const sessionKey = 'coldtrack-session';
-const currentUser = ref(JSON.parse(localStorage.getItem(sessionKey) ?? 'null'));
+const session = ref(readSession());
 
 /**
  * Provides authentication state and session operations.
@@ -13,17 +13,19 @@ const currentUser = ref(JSON.parse(localStorage.getItem(sessionKey) ?? 'null'));
  * @returns {object} Authentication facade.
  */
 export function useAuthenticationStore() {
-  const isAuthenticated = computed(() => Boolean(currentUser.value));
+  const currentUser = computed(() => session.value?.user ?? null);
+  const token = computed(() => session.value?.token ?? null);
+  const isAuthenticated = computed(() => Boolean(token.value && currentUser.value));
 
   /**
    * Stores the authenticated user in local storage.
    *
-   * @param {object} user Authenticated user.
+   * @param {{token: string, user: object}} authenticated Authenticated backend response.
    * @returns {void}
    */
-  function signIn(user) {
-    currentUser.value = user;
-    localStorage.setItem(sessionKey, JSON.stringify(user));
+  function signIn(authenticated) {
+    session.value = authenticated;
+    writeSession(authenticated);
   }
 
   /**
@@ -32,9 +34,9 @@ export function useAuthenticationStore() {
    * @returns {void}
    */
   function signOut() {
-    currentUser.value = null;
-    localStorage.removeItem(sessionKey);
+    session.value = null;
+    clearSession();
   }
 
-  return { currentUser, isAuthenticated, signIn, signOut };
+  return { currentUser, token, isAuthenticated, signIn, signOut };
 }
