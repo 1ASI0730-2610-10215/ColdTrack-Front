@@ -68,7 +68,7 @@
     "newSubtitle": "Complete all fields to create a new shipment",
     "assignedDriver": "Assigned Driver",
     "destinationPlaceholder": "Destination city",
-    "driverPlaceholder": "Select a driver",
+    "driverPlaceholder": "Driver user ID (demo: 2)",
     "cargoDescription": "Cargo Description",
     "cargoPlaceholder": "Describe the shipment contents...",
     "departureDatePlaceholder": "yyyy-mm-dd --:--",
