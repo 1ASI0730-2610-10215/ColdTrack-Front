@@ -8,6 +8,17 @@ import { clearSession, readSession, writeSession } from '../../shared/infrastruc
 const session = ref(readSession());
 
 /**
+ * Normalizes backend authentication responses before persisting them.
+ *
+ * @param {{token?: string, user?: object}|null} authenticated Authenticated backend response.
+ * @returns {{token: string, user: object}|null} Normalized session.
+ */
+function normalizeSession(authenticated) {
+  if (!authenticated?.token || !authenticated?.user) return null;
+  return { token: authenticated.token, user: authenticated.user };
+}
+
+/**
  * Provides authentication state and session operations.
  *
  * @returns {object} Authentication facade.
@@ -24,8 +35,10 @@ export function useAuthenticationStore() {
    * @returns {void}
    */
   function signIn(authenticated) {
-    session.value = authenticated;
-    writeSession(authenticated);
+    const normalizedSession = normalizeSession(authenticated);
+    if (!normalizedSession) throw new Error('Invalid authentication response');
+    session.value = normalizedSession;
+    writeSession(normalizedSession);
   }
 
   /**
@@ -38,5 +51,14 @@ export function useAuthenticationStore() {
     clearSession();
   }
 
-  return { currentUser, token, isAuthenticated, signIn, signOut };
+  /**
+   * Reloads session state from local storage.
+   *
+   * @returns {void}
+   */
+  function restoreSession() {
+    session.value = readSession();
+  }
+
+  return { currentUser, token, isAuthenticated, signIn, signOut, restoreSession };
 }
