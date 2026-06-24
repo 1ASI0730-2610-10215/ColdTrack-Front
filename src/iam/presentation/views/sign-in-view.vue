@@ -4,12 +4,13 @@
  * @author FreshGuard
  */
 import { computed, reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import logoUrl from '../../../assets/logo-coldtrack.png';
 import { useAuthenticationStore } from '../../application/authentication.store.js';
 import { UsersApiService } from '../../infrastructure/users-api.service.js';
 
+const route = useRoute();
 const router = useRouter();
 const toast = useToast();
 const authStore = useAuthenticationStore();
@@ -29,7 +30,8 @@ async function signIn() {
   try {
     const response = await usersApi.signIn(form.email.trim(), form.password);
     authStore.signIn(response.data);
-    await router.push('/dashboard');
+    const redirectPath = typeof route.query.redirect === 'string' ? route.query.redirect : '/dashboard';
+    await router.push(redirectPath);
   } catch (error) {
     toast.add({ severity: 'error', summary: 'ColdTrack', detail: error.response?.data?.detail ?? 'Invalid email or password', life: 3000 });
   } finally {

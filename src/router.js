@@ -1,9 +1,9 @@
 /**
- * @summary Declares application routes and page title behavior.
+ * @summary Declares application routes and delegates IAM navigation protection.
  * @author FreshGuard
  */
 import { createRouter, createWebHistory } from 'vue-router';
-import { useAuthenticationStore } from './iam/application/authentication.store.js';
+import { authenticationGuard } from './iam/infrastructure/authentication.guard.js';
 
 const routes = [
   { path: '/', redirect: '/sign-in' },
@@ -23,18 +23,14 @@ const router = createRouter({
 });
 
 /**
- * Updates the document title before navigation.
+ * Updates the document title and delegates authentication checks before navigation.
  *
  * @param {import('vue-router').RouteLocationNormalized} to Target route.
- * @param {import('vue-router').RouteLocationNormalized} from Previous route.
- * @returns {boolean} Allows navigation to continue.
+ * @returns {{name: string, query?: object} | boolean} Navigation result.
  */
 router.beforeEach((to) => {
-  const authStore = useAuthenticationStore();
   document.title = `ColdTrack - ${to.meta.title ?? 'Dashboard'}`;
-  if (!to.meta.public && !authStore.isAuthenticated.value) return { name: 'sign-in' };
-  if (to.meta.public && authStore.isAuthenticated.value) return { name: 'dashboard' };
-  return true;
+  return authenticationGuard(to);
 });
 
 export default router;
