@@ -1,7 +1,7 @@
 <script setup>
 /**
  * @summary Renders the application toolbar, routed content and footer.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

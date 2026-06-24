@@ -1,7 +1,7 @@
 <script setup>
 /**
  * @summary Shows sensor inventory and sensor registration.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, onMounted, reactive, ref } from 'vue';
 import { useToast } from 'primevue/usetoast';

@@ -1,6 +1,6 @@
 /**
  * @summary Manages browser session state for ColdTrack authentication.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, ref } from 'vue';
 import { clearSession, readSession, writeSession } from '../../shared/infrastructure/http/session-storage.js';

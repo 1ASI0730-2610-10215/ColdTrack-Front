@@ -1,7 +1,7 @@
 <script setup>
 /**
  * @summary Shows the shipment monitoring dashboard.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, onMounted, ref } from 'vue';
 import { useToast } from 'primevue/usetoast';

@@ -1,7 +1,7 @@
 <script setup>
 /**
  * @summary Presents a form for registering new shipments.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';

@@ -22,7 +22,7 @@ function normalizeStatus(value) {
 
 /**
  * @summary Represents a monitored cold-chain shipment.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 export class Shipment {
   /**

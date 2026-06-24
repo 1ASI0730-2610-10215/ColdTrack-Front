@@ -1,6 +1,6 @@
 /**
  * @summary Represents a shipment row optimized for analytics history.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 export class HistoricalShipment {
   constructor(shipment = {}) {

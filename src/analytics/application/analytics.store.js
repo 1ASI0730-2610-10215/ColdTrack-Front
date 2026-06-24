@@ -1,6 +1,6 @@
 /**
  * @summary Loads analytical indicators used across ColdTrack views.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { ref } from 'vue';
 import { DashboardMetrics } from '../domain/model/dashboard-metrics.entity.js';

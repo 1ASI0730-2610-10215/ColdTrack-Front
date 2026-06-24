@@ -1,7 +1,7 @@
 <script setup>
 /**
  * @summary Shows completed shipment history and historical metrics.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, onMounted, ref } from 'vue';
 import { useAnalyticsStore } from '../../../analytics/application/analytics.store.js';

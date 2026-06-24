@@ -1,7 +1,7 @@
 <script setup>
 /**
  * @summary Shows system alerts with filters and alert metrics.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, onMounted, ref } from 'vue';
 import { useAlertsStore } from '../../application/alerts.store.js';

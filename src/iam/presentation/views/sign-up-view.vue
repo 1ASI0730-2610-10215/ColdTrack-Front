@@ -1,7 +1,7 @@
 <script setup>
 /**
  * @summary Presents the account creation screen backed by ColdTrack IAM.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';

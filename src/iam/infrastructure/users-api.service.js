@@ -1,6 +1,6 @@
 /**
  * @summary Provides axios operations for account resources.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { httpClient } from '../../shared/infrastructure/http/http-client.js';
 import { apiEndpoints } from '../../shared/infrastructure/http/api-endpoints.js';

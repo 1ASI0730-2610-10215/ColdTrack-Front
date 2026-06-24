@@ -1,6 +1,6 @@
 /**
  * @summary Centralizes API endpoint paths configured through Vite environment variables.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 export const apiEndpoints = {
   authentication: import.meta.env.VITE_AUTHENTICATION_ENDPOINT_PATH ?? '/api/v1/authentication',

@@ -1,6 +1,6 @@
 /**
  * @summary Represents a ColdTrack account user.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 export class User {
   /**

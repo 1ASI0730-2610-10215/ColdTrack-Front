@@ -1,6 +1,6 @@
 /**
  * @summary Provides browser downloads for binary API responses.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 
 /**

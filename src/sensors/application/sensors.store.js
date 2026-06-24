@@ -1,6 +1,6 @@
 /**
  * @summary Loads and mutates sensor state for Composition API views.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, ref } from 'vue';
 import { Sensor } from '../domain/model/sensor.entity.js';

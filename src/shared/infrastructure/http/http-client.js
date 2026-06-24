@@ -1,6 +1,6 @@
 /**
  * @summary Configures the axios client used by infrastructure services.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import axios from 'axios';
 import { clearSession, readSession } from './session-storage.js';

@@ -1,6 +1,6 @@
 /**
  * @summary JSON Server fake API data source for ColdTrack.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 module.exports = {
   "users": [

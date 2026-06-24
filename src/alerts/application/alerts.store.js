@@ -1,6 +1,6 @@
 /**
  * @summary Loads alert state for Composition API views.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, ref } from 'vue';
 import { Alert } from '../domain/model/alert.entity.js';

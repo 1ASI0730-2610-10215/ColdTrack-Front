@@ -11,7 +11,7 @@ function resolveAlertCode(value) {
 
 /**
  * @summary Represents an operational alert raised by shipment sensors.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 export class Alert {
   /**

@@ -15,7 +15,7 @@ function normalizeStatus(value) {
 
 /**
  * @summary Represents an IoT sensor that can be assigned to a shipment.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 export class Sensor {
   /**

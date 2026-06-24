@@ -1,6 +1,6 @@
 /**
  * @summary Declares application routes and page title behavior.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthenticationStore } from './iam/application/authentication.store.js';

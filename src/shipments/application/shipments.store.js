@@ -1,6 +1,6 @@
 /**
  * @summary Loads and mutates shipment state for Composition API views.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { computed, ref } from 'vue';
 import { Shipment } from '../domain/model/shipment.entity.js';

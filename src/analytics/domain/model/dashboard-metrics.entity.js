@@ -1,6 +1,6 @@
 /**
  * @summary Represents consolidated ColdTrack dashboard indicators.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 export class DashboardMetrics {
   /**

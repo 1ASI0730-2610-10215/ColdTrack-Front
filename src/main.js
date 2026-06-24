@@ -1,6 +1,6 @@
 /**
  * @summary Configures Vue, PrimeVue, routing and internationalization.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import { createApp } from 'vue';
 import PrimeVue from 'primevue/config';

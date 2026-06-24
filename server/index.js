@@ -1,6 +1,6 @@
 /**
  * @summary Starts the ColdTrack fake API and persists mutations in db.js.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 const fs = require('fs');
 const path = require('path');
@@ -20,7 +20,7 @@ const port = 3000;
  */
 function persistDatabase() {
   const currentData = router.db.getState();
-  const fileContent = `/**\n * @summary JSON Server fake API data source for ColdTrack.\n * @author Codex Assistant\n */\nmodule.exports = ${JSON.stringify(currentData, null, 2)};\n`;
+  const fileContent = `/**\n * @summary JSON Server fake API data source for ColdTrack.\n * @author FreshGuard\n */\nmodule.exports = ${JSON.stringify(currentData, null, 2)};\n`;
   fs.writeFileSync(dbPath, fileContent, 'utf8');
 }
 

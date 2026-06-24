@@ -1,7 +1,7 @@
 <script setup>
 /**
  * @summary Root component that renders the ColdTrack application shell.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 import appLayout from './shared/presentation/components/app-layout.vue';
 </script>

@@ -1,6 +1,6 @@
 /**
  * @summary Persists the authenticated ColdTrack session used by HTTP infrastructure.
- * @author Codex Assistant
+ * @author FreshGuard
  */
 const sessionKey = 'coldtrack-session';
 
