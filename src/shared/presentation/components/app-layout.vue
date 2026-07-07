@@ -46,7 +46,7 @@ watch(authStore.isAuthenticated, (authenticated) => {
           <nav v-if="showNavigation" class="main-nav" :aria-label="$t('app.primaryNavigation')">
             <router-link class="nav-link" to="/dashboard"><i class="pi pi-home" />{{ $t('nav.dashboard') }}</router-link>
             <router-link class="nav-link" to="/shipments/new"><i class="pi pi-plus" />{{ $t('nav.newShipment') }}</router-link>
-            <router-link class="nav-link" to="/sensors"><i class="pi pi-thermometer" />{{ $t('nav.sensors') }}</router-link>
+            <router-link class="nav-link" to="/sensors"><i class="pi pi-gauge" />{{ $t('nav.sensors') }}</router-link>
             <router-link class="nav-link nav-link-with-badge" to="/alerts">
               <i class="pi pi-bell" />{{ $t('nav.alerts') }}<span v-if="activeAlertCount" class="notification-badge" :aria-label="`${activeAlertCount} active notifications`">{{ activeAlertCount }}</span>
             </router-link>
