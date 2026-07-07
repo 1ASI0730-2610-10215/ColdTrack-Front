@@ -104,7 +104,7 @@ onMounted(() => Promise.all([alertStore.load(), shipmentStore.load()]));
         </pv-select>
       </div>
       <div v-for="alert in filteredAlerts" :key="alert.id" class="alert-row">
-        <i :class="['pi', alert.type === 'humidity' ? 'pi-tint' : 'pi-thermometer', alert.severity]" />
+        <i :class="['pi', alert.type === 'humidity' ? 'pi-wave-pulse' : 'pi-gauge', alert.severity]" />
         <div>
           <div class="alert-heading">
             <strong>{{ alert.alertCode }}</strong>
