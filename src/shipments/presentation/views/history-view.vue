@@ -58,7 +58,7 @@ onMounted(() => Promise.all([analyticsStore.loadHistory(periodStart, periodEnd),
 
     <div class="metric-grid" aria-label="History metrics">
       <pv-card class="metric-card"><template #content><i class="pi pi-box metric-icon green" /><span>{{ $t('common.total') }}</span><strong>{{ completedShipments.length }}</strong><p>{{ $t('history.completedShipments') }}</p></template></pv-card>
-      <pv-card class="metric-card"><template #content><i class="pi pi-thermometer metric-icon blue" /><span>{{ $t('history.average') }}</span><strong>{{ averageTemperature }}°C</strong><p>{{ $t('history.averageTemperature') }}</p></template></pv-card>
+      <pv-card class="metric-card"><template #content><i class="pi pi-gauge metric-icon blue" /><span>{{ $t('history.average') }}</span><strong>{{ averageTemperature }}°C</strong><p>{{ $t('history.averageTemperature') }}</p></template></pv-card>
       <pv-card class="metric-card"><template #content><i class="pi pi-box metric-icon yellow" /><span>{{ $t('common.total') }}</span><strong>{{ generatedAlerts }}</strong><p>{{ $t('history.generatedAlerts') }}</p></template></pv-card>
     </div>
 

@@ -28,7 +28,15 @@ const toast = useToast();
 const periodStart = `${new Date().getFullYear()}-01-01T00:00:00.000Z`;
 const periodEnd = `${new Date().getFullYear()}-12-31T23:59:59.999Z`;
 
-const filteredShipments = computed(() => shipmentStore.activeShipments.value.filter((shipment) =>
+const activeShipmentRows = computed(() => shipmentStore.activeShipments.value.map((shipment) => {
+  const sensor = sensorStore.sensors.value.find((item) => item.shipmentId === shipment.id);
+  return {
+    ...shipment,
+    temperature: shipment.temperature ?? sensor?.temperature ?? null,
+    humidity: shipment.humidity ?? sensor?.humidity ?? null
+  };
+}));
+const filteredShipments = computed(() => activeShipmentRows.value.filter((shipment) =>
   `${shipment.shipmentCode} ${shipment.destination} ${shipment.driver}`.toLowerCase().includes(searchTerm.value.toLowerCase())
 ));
 const visibleAlerts = computed(() => alertStore.activeAlerts.value.slice(0, 2));
@@ -132,7 +140,7 @@ async function exportReport() {
 }
 
 onMounted(async () => {
-  await Promise.all([shipmentStore.load(), alertStore.load(), analyticsStore.loadDashboard()]);
+  await Promise.all([shipmentStore.load(), sensorStore.load(), alertStore.load(), analyticsStore.loadDashboard()]);
 });
 </script>
 
@@ -164,7 +172,7 @@ onMounted(async () => {
     </article>
 
     <div class="metric-grid" aria-label="Shipment metrics">
-      <pv-card class="metric-card"><template #content><i class="pi pi-box metric-icon blue" /><span>{{ $t('common.total') }}</span><strong>{{ analyticsStore.metrics.value.totalShipments }}</strong><p>{{ $t('dashboard.registeredShipments') }}</p></template></pv-card>
+      <pv-card class="metric-card"><template #content><i class="pi pi-warehouse metric-icon blue" /><span>{{ $t('common.total') }}</span><strong>{{ analyticsStore.metrics.value.totalShipments }}</strong><p>{{ $t('dashboard.registeredShipments') }}</p></template></pv-card>
       <pv-card class="metric-card"><template #content><i class="pi pi-truck metric-icon blue" /><span>{{ $t('common.active') }}</span><strong>{{ analyticsStore.metrics.value.activeShipments }}</strong><p>{{ $t('dashboard.onRoute') }}</p></template></pv-card>
       <pv-card class="metric-card"><template #content><i class="pi pi-check-circle metric-icon green" /><span>{{ $t('common.completed') }}</span><strong>{{ analyticsStore.metrics.value.completedShipments }}</strong><p>{{ $t('dashboard.delivered') }}</p></template></pv-card>
     </div>
