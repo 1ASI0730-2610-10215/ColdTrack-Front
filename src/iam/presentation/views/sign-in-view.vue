@@ -15,7 +15,7 @@ const router = useRouter();
 const toast = useToast();
 const authStore = useAuthenticationStore();
 const usersApi = new UsersApiService();
-const form = reactive({ email: 'admin@coldtrack.local', password: 'Password123!' });
+const form = reactive({ email: '', password: '' });
 const isSubmitting = ref(false);
 const canSubmit = computed(() => form.email.trim().length > 0 && form.password.trim().length > 0);
 
@@ -47,8 +47,8 @@ async function signIn() {
     <p>{{ $t('auth.system') }}</p>
     <form class="auth-card" aria-label="Sign in form" @submit.prevent="signIn">
       <h2 id="sign-in-title">{{ $t('auth.signInTitle') }}</h2>
-      <label>{{ $t('auth.email') }}<pv-input-text v-model="form.email" type="email" required placeholder="tu@email.com" aria-label="Email" /></label>
-      <label>{{ $t('auth.password') }}<pv-password v-model="form.password" toggle-mask :feedback="false" required placeholder="********" aria-label="Password" /></label>
+      <label>{{ $t('auth.email') }}<pv-input-text v-model="form.email" type="email" name="coldtrack-email" autocomplete="off" required placeholder="tu@email.com" aria-label="Email" /></label>
+      <label>{{ $t('auth.password') }}<pv-password v-model="form.password" name="coldtrack-password" autocomplete="new-password" toggle-mask :feedback="false" required placeholder="********" aria-label="Password" /></label>
       <a href="#" class="inline-link">{{ $t('auth.forgotPassword') }}</a>
       <pv-button type="submit" :label="$t('auth.signInTitle')" :loading="isSubmitting" :disabled="!canSubmit" />
       <p>{{ $t('auth.noAccount') }} <router-link to="/sign-up">{{ $t('auth.register') }}</router-link></p>

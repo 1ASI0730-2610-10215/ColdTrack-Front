@@ -105,7 +105,7 @@ onMounted(() => Promise.all([sensorStore.load(), shipmentStore.load()]));
     </div>
 
     <div class="metric-grid" aria-label="Sensor metrics">
-      <pv-card class="metric-card"><template #content><i class="pi pi-thermometer metric-icon blue" /><span>{{ $t('common.total') }}</span><strong>{{ sensorStore.sensors.value.length }}</strong><p>{{ $t('sensors.registeredSensors') }}</p></template></pv-card>
+      <pv-card class="metric-card"><template #content><i class="pi pi-gauge metric-icon blue" /><span>{{ $t('common.total') }}</span><strong>{{ sensorStore.sensors.value.length }}</strong><p>{{ $t('sensors.registeredSensors') }}</p></template></pv-card>
       <pv-card class="metric-card"><template #content><i class="pi pi-link metric-icon blue" /><span>{{ $t('common.active') }}</span><strong>{{ sensorStore.assignedSensors.value.length }}</strong><p>{{ $t('sensors.assignedSensors') }}</p></template></pv-card>
       <pv-card class="metric-card"><template #content><i class="pi pi-check-circle metric-icon green" /><span>{{ $t('common.available') }}</span><strong>{{ sensorStore.availableSensors.value.length }}</strong><p>{{ $t('sensors.freeSensors') }}</p></template></pv-card>
     </div>
